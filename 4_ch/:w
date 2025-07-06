@@ -46,22 +46,5 @@ The process' \textbf{address space} is the memory the process can address.
 
 Some registers are special.
 The \textbf{program counter (PC) / instruction pointer (IP)} points to the next instruction to execute.
-The \textbf{stack pointer} and \textbf{frame pointer} manage the stack for function parameters, local variables, and return addresses.
-Programs often access persistent storage devices too; I/O info might include a list of files the process currently has open.
-
-\subsection{Process API}
-
-These APIs, in some form, are available on any modern OS.
-
-\begin{itemize}
-    \item \textbf{Create: } Method to create new processes
-    \item \textbf{Destroy: } Method to destroy new processes (many processes will exit by themselves when complete)
-    \item \textbf{Wait: } uh yeah
-    \item \textbf{Miscellaneous Control: } Sometimes other than killing or waiting for a process there are other controls possible (suspend/sleep)
-    \item \textbf{Status: } there are usually interfaces to get some metainfo abt a process (runtime, state, etc.)
-
-\end{itemize}
-
-\subsection{Process Creation: A Little More Detail}
 
 \end{document}
