@@ -1,0 +1,127 @@
+\documentclass{article}
+\usepackage{amsmath, amssymb, graphicx, parskip}
+\title{2. Introduction to Operating Systems}
+\author{Ryan Liu}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{claim}{Claim}[section]
+\newtheorem{subclaim}{Subclaim}[claim]
+\newtheorem{corollary}{Corollary}[theorem]
+\newtheorem{lemma}[theorem]{Lemma}
+
+\begin{document}
+
+\maketitle
+\thispagestyle{empty}
+\newpage
+\pagenumbering{arabic}
+
+\setcounter{section}{2}
+
+When a program runs, it is just executing instructions.
+Millions of times a second, the processor fetches an instruction from memory, decodes it, and executes it.
+Then it moves on to the next instruction.
+It continues until the program terminates.
+
+Under the hood, processors can execute multiple instructions at once, or execute them out of order and put them back in order, but this book abstracts the execution of instructions to a sequential stream.
+
+The \textbf{Operating System (OS)} is in charge of making sure the system operates correctly and efficiently in an easy-to-use matter.
+
+The primary way the OS achieves this is through \textbf{virtualization}.
+You can virtualize traditionally physical resources (processor, memory, disk) and transform it into a virtual counterpart.
+Sometimes the OS is referred to as a \textbf{virtual machine}.
+
+The OS provides APIs programmers can call --- \textbf{system calls}.
+If following some standard (POSIX), it is said to provide a \textbf{standard library}.
+Generally on the order of some hundreds of calls.
+
+Since virtualization allows time multiplexing (sharing CPU time) and space multiplexing (separation of virtual addr spaces and sharing RAM), the OS is sometimes known as a \textbf{resource manager}.
+Resources include: CPU, memory, disk
+
+\subsection{Virtualizing the CPU}
+
+Deciding which process should run in the current timesplice is determined by a \textbf{policy} of the OS.
+
+\subsection{Virtualizing Memory}
+
+To read mewmory, one must specify an \textbf{address} to access the data stored there.
+To \textbf{write} memory, one must also specify the data to be written to the given address.
+Memory is also accessed on each instruction fetch (since instructions of the program are in memory too).
+
+In the example of page 8, two programs are shown storing things in the same address.
+How? That is the virtual address.
+Each program has its own \textbf{virtual address space}, private to that process.
+It is the OS' job to map virtual addresses to physical ones.
+
+\subsection{Concurrency}
+
+Problems of concurrency extend to \textbf{multithreaded} programs.
+A process has threads, and threads share the process' private address space.
+
+Concurrent threads running can lead to race conditions, when modifying shared data.
+
+Concurrency is addressed in greater detail in the second part of the book.
+
+\subsection{Persistence}
+
+In system memory, data can be easily lost, since devices such as DRAM store values in a \textbf{volatile} manner (when power turns off, data in memory is lost.)
+
+Persistence storage pardware comes in the form of an \textbf{I/O} device, typically an \textbf{HDD} or \textbf{SSD} in this day and age.
+
+The SW in the OS that usually manages disk is called the \textbf{file system}.
+
+Unlike the private address space or private CPU abstraction the OS provides to processes, the OS assumes users will want to share information in files and does not provide a private disk space.
+
+The OS syscalls required are \textsf{open(), write(), close()}.
+
+Actually writing to disk is tedious.
+Interacting with a \textbf{device driver} is nontrivial.
+
+Fun fact from the author: many file systems do batch-writes since disk requests are slow.
+To handle system crashes during writes, most file systems incorporate a write protocol such as \textbf{journaling} or \textbf{copy-on-write}, ensuring recoverability to a reasonable state in the case of a crash.
+
+\subsection{Design Goals}
+
+Build \textbf{abstractions} for ease of use.
+Emphasize \textbf{performance} by \textbf{minimizing overheads} of the OS.
+Consider trade-offs.
+
+Provide \textbf{protection} between applications, as well as between the OS and applications.
+\textbf{isolation} between processes is key to protection.
+
+Emphasize \textbf{reliability}; the OS must run always.
+
+Other potential goals: \textbf{energy-efficiency}, \textbf{security}, \textbf{mobility (edge computing)}
+
+\subsection{Some History}
+
+Blah Blah
+
+In the beginning, there was no multiplexing, there was a human operator who did scheduling, batch processing was used, computers were not interactive.
+
+Then, kernel and user space was separated, and the idea of a system call was invented.
+Largely for security reasons.
+
+Remember that syscalls have to jump to kernel mode via a \textbf{trap instruction}, or perhaps an \textbf{interrupt}.
+A prespecified \textbf{trap handler} (looked up in a \textbf{trap table} based on info passed to the OS) is executed.
+
+In kernel mode, the OS has full access to the hardware of the system and can give processes more memory or perform I/O.
+When it's done, it passes control back to the user via a \textbf{return-from-trap} instruction, which reverts to user mode and passes control back to where the application made the system call.
+
+\subsubsection{The Era of Multiprograming}
+
+The OS began time multiplexing the CPU, which helps speed up I/O bound problems.
+Issues such as \textbf{memory protection} (isolation) and dealing with \textbf{concurrency} became important.
+UNIX was developed around this time.
+
+\subsubsection{The Modern Era}
+
+We have PCs woohoo
+Early OS such as \textbf{DOS} did not implement memory protection and shit and early PC OS missed some features. whatever blah blah
+
+Everything is UNIX lmaoo Linux is UNIX based, MAC OS X is UNIX based, Android is a Linux distro and thus UNIX based.
+Basically UNIX is hella important, and there are some key things to know about UNIX.
+
+Things to know: pipes, everything is a file, 
+
+\end{document}
