@@ -9,9 +9,6 @@
 \newtheorem{corollary}{Corollary}[theorem]
 \newtheorem{lemma}[theorem]{Lemma}
 
-\renewcommand{\thesubsection}{\thesection.\alph{subsection}}
-
-
 \begin{document}
 \maketitle
 \thispagestyle{empty}
@@ -63,5 +60,35 @@ These APIs, in some form, are available on any modern OS.
 \end{itemize}
 
 \subsection{Process Creation: A Little More Detail}
+
+How are programs transformed into processes?
+
+First, to run a program, the OS loads its coad and any static data (e.g. initializaed variables) into memory, into the process' address space.
+Programs initially sit on LTS in an \textbf{executable format}.
+
+\textbf{eager loading}: load all at once before running (archaic)
+
+\textbf{lazy loading}: load pieces of code only as demanded (think lazy seg tree push-down operation)
+
+Think \textbf{paging} and \textbf{swapping}, common theme in systems with cache hierarchy, covered in later chapters (like database buffer pool)
+
+After loading into memory, the OS allocates the program's \textbf{run-time stack} or just \textbf{stack}; in C/C++, this is where local variables, function parameters, and return addresses are stored.
+
+On UNIX based systems, the stack is typically 8MB by default; on Windows, 1MB.
+
+C programs use the stack for local variables, function parameters, and return addresses.
+The OS allocates the memory, and initializes the stack with arguments (argc, argv).
+
+The OS may also create some initial memory for the \textbf{heap}, whose size is limited by available disk space and virtual address space.
+Programs can allocate on the heap by calling \textsf{malloc()}, and free it with \textsf{free}.
+When the program rums out of heap memory, the OS must allocate more.
+
+The OS also does some other initialization, particularly for I/O.
+In UNIX systems, each process, by default, has three open \textbf{file descriptors}, for stdio and stderr.
+This will be further explored in part 3.
+
+After all this the OS starts the program running at the entry point, in \textsf{main()}
+
+\subsection{}
 
 \end{document}
