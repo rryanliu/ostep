@@ -1,0 +1,44 @@
+\documentclass{article}
+\usepackage{amsmath, amssymb, graphicx, parskip}
+\title{Interlide: Process API}
+\author{Ryan Liu}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{claim}{Claim}[section]
+\newtheorem{subclaim}{Subclaim}[claim]
+\newtheorem{corollary}{Corollary}[theorem]
+\newtheorem{lemma}[theorem]{Lemma}
+
+\begin{document}
+\maketitle
+\thispagestyle{empty}
+\newpage
+\pagenumbering{arabic}
+
+\setcounter{section}{4}
+\section*{}
+
+To create a process in UNIX, use a pair of system calls: \textsf{fork()} and \textsf{exec()}.
+A third call, \textsf{wait()} can be used by a process wishing to wait for a process it has created to complete.
+
+\subsection{The \textsf{fork()} System Call}
+
+\textsf{fork()} is lwk weird.
+We learned from Tanenbaum that \textsf{fork()} creates a clone of the current process.
+But furthermore, the process that is created doesn't start running at \textsf{main()}, but it comes into life as if it had called \textsf{fork()} itself --- a true clone, a copy of the array of bytes representing the entirety of the state of the parent process.
+
+But it still isn't an \textit{exact} copy, like how a clone is now another individual.
+The value that \textsf{fork()} returns to the parent and child is different.
+While the parent receives the PID of the child, the child is returned a 0.
+This is useful because now we know which is parent and which is child.
+
+\subsection{Adding \textsf{wait()} System Call}
+
+This is actually not deterministic and can lead to race conditions, unless we use \textsf{wait()} of \textsf{waitpid()}
+
+\subsection{Finally, the \textsf{exec()} System Call}
+
+There are 6 variants of \textsf{exec()}: \textsf{exec1(), execle(), execlp(), execv(), execvp()}.
+Read the man pages
+
+\end{document}
