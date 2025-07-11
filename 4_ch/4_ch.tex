@@ -89,6 +89,19 @@ This will be further explored in part 3.
 
 After all this the OS starts the program running at the entry point, in \textsf{main()}
 
-\subsection{}
+\subsection{Process States}
+
+\begin{itemize}
+    \item \textbf{Running:} Executing Instructions
+    \item \textbf{Ready:} Ready to run but the OS has chosen not to at this time
+    \item \textbf{Blocked:} Not ready to run until some event occurs, e.g. waiting for I/O
+\end{itemize}
+
+\subsection{Data Structures}
+
+The OS is a program.
+Like many programs, it stores some relevant info in data structures.
+e.g. a \textbf{process list} for all processes that are ready, and additional information to track running processes.
+The OS must also track blocked process, waking the correct process when an I/O event completes.
 
 \end{document}
