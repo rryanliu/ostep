@@ -104,4 +104,11 @@ Like many programs, it stores some relevant info in data structures.
 e.g. a \textbf{process list} for all processes that are ready, and additional information to track running processes.
 The OS must also track blocked process, waking the correct process when an I/O event completes.
 
+Important info: \textbf{register context} (contents of register state, this place is read and written to during context switches), \textbf{process state} (unused, sleeping, runnable, running), some other stuff such as memory size and location, stack pointer, state, pid, parent, whether its sleeping, whether it has been killed, open files, current directory, context, and trapframe.
+
+You can see tere are other states a process can be in.
+(\textbf{final state (zombie state in UNIX)}: exited, but not yet cleaned.
+Here, other processes can examine the return code of the process and see if it executed successfully; usually in UNIX programs return 0 upon success.
+When finished, the parent (the typical examiner) will make one final call to wait for the completion of the child, and to indicate to the OS that it can clean up any relevant data structures that referred to the now extinct process.)
+
 \end{document}
